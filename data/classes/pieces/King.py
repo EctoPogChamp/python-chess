@@ -44,38 +44,38 @@ class King(Piece):
 
 	def can_castle(self, board):
 		if not self.has_moved:
+			if not board.is_in_check(self.color, board_change=[self.pos, square.pos]):
+				if self.color == 'white':
+					queenside_rook = board.get_piece_from_pos((0, 7))
+					kingside_rook = board.get_piece_from_pos((7, 7))
+					if queenside_rook != None:
+						if not queenside_rook.has_moved:
+							if [
+								board.get_piece_from_pos((i, 7)) for i in range(1, 4)
+							] == [None, None, None]:
+								return 'queenside'
+					if kingside_rook != None:
+						if not kingside_rook.has_moved:
+							if [
+								board.get_piece_from_pos((i, 7)) for i in range(5, 7)
+							] == [None, None]:
+								return 'kingside'
 
-			if self.color == 'white':
-				queenside_rook = board.get_piece_from_pos((0, 7))
-				kingside_rook = board.get_piece_from_pos((7, 7))
-				if queenside_rook != None:
-					if not queenside_rook.has_moved:
-						if [
-							board.get_piece_from_pos((i, 7)) for i in range(1, 4)
-						] == [None, None, None]:
-							return 'queenside'
-				if kingside_rook != None:
-					if not kingside_rook.has_moved:
-						if [
-							board.get_piece_from_pos((i, 7)) for i in range(5, 7)
-						] == [None, None]:
-							return 'kingside'
-
-			elif self.color == 'black':
-				queenside_rook = board.get_piece_from_pos((0, 0))
-				kingside_rook = board.get_piece_from_pos((7, 0))
-				if queenside_rook != None:
-					if not queenside_rook.has_moved:
-						if [
-							board.get_piece_from_pos((i, 0)) for i in range(1, 4)
-						] == [None, None, None]:
-							return 'queenside'
-				if kingside_rook != None:
-					if not kingside_rook.has_moved:
-						if [
-							board.get_piece_from_pos((i, 0)) for i in range(5, 7)
-						] == [None, None]:
-							return 'kingside'
+				elif self.color == 'black':
+					queenside_rook = board.get_piece_from_pos((0, 0))
+					kingside_rook = board.get_piece_from_pos((7, 0))
+					if queenside_rook != None:
+						if not queenside_rook.has_moved:
+							if [
+								board.get_piece_from_pos((i, 0)) for i in range(1, 4)
+							] == [None, None, None]:
+								return 'queenside'
+					if kingside_rook != None:
+						if not kingside_rook.has_moved:
+							if [
+								board.get_piece_from_pos((i, 0)) for i in range(5, 7)
+							] == [None, None]:
+								return 'kingside'
 
 
 	def get_valid_moves(self, board):
